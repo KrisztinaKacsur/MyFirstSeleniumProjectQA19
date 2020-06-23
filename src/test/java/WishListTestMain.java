@@ -6,11 +6,11 @@ public class WishListTestMain {
 
         WishListTest wishListTest = new WishListTest();
 
-        /*wishListTest.addToWishListSale();
+        wishListTest.addToWishListSale();
         wishListTest.addToWishListLogin();
         wishListTest.removeFromWishList();
         wishListTest.updateQuantityInWishList();
-        wishListTest.addFromWishListToCart();*/
+        wishListTest.addFromWishListToCart();
 
 
     }

@@ -6,8 +6,8 @@ public class CartTestMain {
 
         CartTest cart = new CartTest();
 
-        /*cart.addProductToCart();
-        cart.removeFromCart();*/
+        cart.addProductToCart();
+        cart.removeFromCart();
 
     }
 }

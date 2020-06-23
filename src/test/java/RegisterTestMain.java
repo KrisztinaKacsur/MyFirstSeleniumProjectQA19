@@ -6,7 +6,7 @@ public class RegisterTestMain {
 
         RegisterTest registerTest = new RegisterTest();
 
-       // registerTest.registerNewUser();
+        registerTest.registerNewUser();
 
 
 

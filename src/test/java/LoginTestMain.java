@@ -7,9 +7,9 @@ public class LoginTestMain {
 
         LoginTest login = new LoginTest();
 
-        /*login.login();
+        login.login();
         login.invalidEmailLogin();
-        login.invalidPasswordLogin();*/
+        login.invalidPasswordLogin();
 
     }
 }
