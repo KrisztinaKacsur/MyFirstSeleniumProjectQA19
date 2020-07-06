@@ -10,6 +10,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 
+import java.util.concurrent.TimeUnit;
+
 
 public class CartTest {
         private WebDriver driver;
@@ -27,44 +29,33 @@ public class CartTest {
         @Test
         public void addProductToCart () {
 
-                driver.findElement(By.cssSelector("body > div > div.page > div.main-container.col1-layout > " +
-                                                  "div > div > div.std > div.widget.widget-new-products > " +
-                                                  "div.widget-products > ul > li:nth-child(2) > div > h3 > a")).click();
-                driver.findElement(By.cssSelector("#swatch22 > span.swatch-label > img")).click();
-                driver.findElement(By.cssSelector("#swatch79 > span.swatch-label")).click();
-                driver.findElement(By.cssSelector("#product_addtocart_form > div.product-shop > " +
-                                                  "div.product-options-bottom > div.add-to-cart > " +
-                                                  "div.add-to-cart-buttons > button > span > span")).click();
+                driver.findElement(By.cssSelector("[href*='703']")).click();
+                driver.findElement(By.cssSelector("[alt='White']")).click();
+                driver.findElement(By.id("swatch79")).click();
+                driver.findElement(By.cssSelector(".add-to-cart-buttons .btn-cart")).click();
 
                 WebElement wasAddedElement =
-                        driver.findElement(By.cssSelector("body > div > div.page > div.main-container.col1-layout > " +
-                                                          "div > div > div.cart.display-single-price > ul > li > ul > " +
-                                                          "li > span"));
-                Assert.assertEquals("Linen Blazer was added to your shopping cart." , wasAddedElement.getText());
+                        driver.findElement(By.cssSelector(".success-msg"));
+                Assert.assertEquals("Chelsea Tee was added to your shopping cart." , wasAddedElement.getText());
             }
 
 
         @Test
         public void removeFromCart () {
 
-                driver.findElement(By.cssSelector("body > div > div.page > div.main-container.col1-layout > " +
-                    "div > div > div.std > div.widget.widget-new-products > " +
-                    "div.widget-products > ul > li:nth-child(2) > div > h3 > a")).click();
-                driver.findElement(By.cssSelector("#swatch22 > span.swatch-label > img")).click();
-                driver.findElement(By.cssSelector("#swatch79 > span.swatch-label")).click();
-                driver.findElement(By.cssSelector("#product_addtocart_form > div.product-shop > " +
-                        "div.product-options-bottom > div.add-to-cart > " +
-                        "div.add-to-cart-buttons > button > span > span")).click();
+                driver.findElement(By.cssSelector("[href*='703']")).click();
+                driver.findElement(By.cssSelector("[alt='Black']")).click();
+                driver.findElement(By.id("swatch77")).click();
+                driver.findElement(By.cssSelector(".add-to-cart-buttons .btn-cart")).click();
 
-                driver.findElement(By.cssSelector("#header > div > div.skip-links > div > div > a > span.label")).click();
-                driver.findElement(By.cssSelector("#cart-sidebar > li > div > a.remove")).click();
+                driver.findElement(By.cssSelector(".header-minicart")).click();
+                driver.findElement(By.cssSelector(".odd [title='Remove This Item']")).click();
                 Alert alert = driver.switchTo().alert();
                 alert.accept();
-                driver.findElement(By.cssSelector("#header > div > div.skip-links > div > div > a > span.label")).click();
-                driver.findElement(By.cssSelector("#header > div > div.skip-links > div > div > a > span.label")).click();
+                driver.navigate().refresh();
 
-                WebElement successfullyRemovedElement = driver.findElement(By.id("header-cart"));
-                Assert.assertTrue(successfullyRemovedElement.isDisplayed());
+                WebElement successfullyRemovedElement = driver.findElement(By.cssSelector(".page-title"));
+                Assert.assertEquals("SHOPPING CART IS EMPTY",successfullyRemovedElement.getText());
 
             }
 
@@ -73,65 +64,45 @@ public class CartTest {
         @Test
         public void emptyCart () {
 
-                driver.findElement(By.cssSelector("#nav > ol > li.level0.nav-6.last > a")).click();
-                driver.findElement(By.cssSelector("body > div > div.page > div.main-container.col3-layout > div " +
-                                                  "> div.col-wrapper > div.col-main > div.category-products > ul > " +
-                                                  "li:nth-child(1) > div > h2 > a")).click();
-                driver.findElement(By.cssSelector("#swatch26 > span.swatch-label > img")).click();
-                driver.findElement(By.cssSelector("#swatch78 > span.swatch-label")).click();
-                driver.findElement(By.cssSelector("#product_addtocart_form > div.product-shop > " +
-                                                  "div.product-options-bottom > div.add-to-cart > " +
-                                                  "div.add-to-cart-buttons > button > span > span")).click();
+                driver.findElement(By.cssSelector(".nav-6 [href]")).click();
+                driver.findElement(By.cssSelector("h2.product-name [href*=sweater]")).click();
+                driver.findElement(By.cssSelector("[alt='Indigo']")).click();
+                driver.findElement(By.id("option78")).click();
+                driver.findElement(By.cssSelector(".add-to-cart-buttons .btn-cart")).click();
                 driver.navigate().back();
                 driver.navigate().back();
 
-                driver.findElement(By.cssSelector("body > div > div.page > div.main-container.col3-layout > div > " +
-                                                  "div.col-wrapper > div.col-main > div.category-products > ul > " +
-                                                  "li:nth-child(2) > div > h2 > a")).click();
-                driver.findElement(By.cssSelector("#swatch27 > span.swatch-label > img")).click();
-                driver.findElement(By.cssSelector("#swatch65 > span.swatch-label")).click();
-                driver.findElement(By.cssSelector("#product_addtocart_form > div.product-shop > " +
-                                                  "div.product-options-bottom > div.add-to-cart > div.add-to-cart-" +
-                                                  "buttons > button > span > span")).click();
-
-                driver.findElement(By.cssSelector("#header > div > div.skip-links > div > div > a > " +
-                                                  "span.label")).click();
-                driver.findElement(By.cssSelector("#header-cart > div.minicart-wrapper > div.minicart-actions " +
-                                                  "> a")).click();
-                driver.findElement(By.cssSelector("#empty_cart_button > span > span")).click();
+                driver.findElement(By.cssSelector(".product-name [href*=boyfriend]")).click();
+                driver.findElement(By.cssSelector("[alt='Blue']")).click();
+                driver.findElement(By.id("swatch65")).click();
+                driver.findElement(By.cssSelector(".add-to-cart-buttons .btn-cart")).click();
+                driver.findElement(By.cssSelector(".header-minicart")).click();
+                driver.findElement(By.cssSelector(".cart-link")).click();
+                driver.findElement(By.id("empty_cart_button")).click();
 
                 WebElement emptyCartElement =
-                        driver.findElement(By.cssSelector("body > div > div.page > div.main-container.col1-layout > " +
-                                                          "div > div > div.page-title > h1"));
+                        driver.findElement(By.cssSelector(".page-title"));
                 Assert.assertEquals("SHOPPING CART IS EMPTY" , emptyCartElement.getText());
             }
 
 
         @Test
         public void changeQuantityInCart () {
-            driver.findElement(By.cssSelector("#nav > ol > li.level0.nav-5.parent > a")).click();
-            driver.findElement(By.cssSelector("body > div > div.page > div.main-container.col3-layout > " +
-                                              "div > div.col-wrapper > div.col-main > div.category-products > " +
-                                              "ul > li:nth-child(3) > div > h2 > a")).click();
-            driver.findElement(By.cssSelector("#product_addtocart_form > div.add-to-cart-wrapper > div > div > " +
-                                              "div.add-to-cart-buttons > button > span > span")).click();
-            driver.findElement(By.cssSelector("#header > div > div.skip-links > div > div > a > span.label")).click();
-            driver.findElement(By.cssSelector("#header-cart > div.minicart-wrapper > div.minicart-actions" +
-                                              " > a")).click();
-            driver.findElement(By.cssSelector("#shopping-cart-table > tbody > tr > td.product-cart-actions > ul > " +
-                                              "li > a")).click();
-            driver.findElement(By.cssSelector("#qty")).click();
-            driver.findElement(By.cssSelector("#qty")).clear();
-            driver.findElement(By.cssSelector("#qty")).sendKeys("2");
-            driver.findElement(By.cssSelector("#product_addtocart_form > div.add-to-cart-wrapper > div > div > " +
-                                              "div.add-to-cart-buttons > button > span > span")).click();
+            driver.findElement(By.cssSelector(".nav-5")).click();
+            driver.findElement(By.cssSelector(".product-name [href*='maxi']")).click();
+            driver.findElement(By.cssSelector("[alt='Purple']")).click();
+            driver.findElement(By.id("swatch78")).click();
+            driver.findElement(By.cssSelector(".add-to-cart-buttons .btn-cart")).click();
+
+
+            driver.findElement(By.cssSelector(".product-cart-actions [href*=checkout]")).click();
+            driver.findElement(By.id("qty")).click();
+            driver.findElement(By.id("qty")).clear();
+            driver.findElement(By.id("qty")).sendKeys("2");
+            driver.findElement(By.cssSelector(".add-to-cart-buttons .btn-cart")).click();
             WebElement quantityElement =
-                    driver.findElement(By.cssSelector("body > div > div.page > div.main-container.col1-layout > " +
-                                                      "div > div > div.cart.display-single-price > ul > li > ul > " +
-                                                      "li > span"));
-            Assert.assertEquals("Park Row Throw was updated in your shopping cart.", quantityElement.getText());
-
-
+                    driver.findElement(By.cssSelector(".success-msg"));
+            Assert.assertEquals("Racer Back Maxi Dress was updated in your shopping cart.", quantityElement.getText());
 
             }
 
@@ -139,28 +110,25 @@ public class CartTest {
        @Test
         public void estimateShippingTax () {
             Actions action = new Actions(driver);
-            WebElement accessoriesElement = driver.findElement(By.cssSelector("#nav > ol > li.level0.nav-3.parent > a"));
+            WebElement accessoriesElement = driver.findElement(By.cssSelector(".nav-3 .has-children"));
             action.moveToElement(accessoriesElement).perform();
-            driver.findElement(By.xpath("//*[@id=\"nav\"]/ol/li[3]/ul/li[2]/a")).click();
-            driver.findElement(By.cssSelector("body > div > div.page > div.main-container.col3-layout > div > " +
-                                              "div.col-wrapper > div.col-main > div.category-products > ul > li > " +
-                                              "div > h2 > a")).click();
-            driver.findElement(By.cssSelector("#product_addtocart_form > div.add-to-cart-wrapper > div > div > " +
-                                              "div.add-to-cart-buttons > button > span > span")).click();
-            Select dropdownCountry = new Select(driver.findElement(By.xpath("//*[@id=\"country\"]")));
+            driver.findElement(By.cssSelector(".nav-3-1 a")).click();
+            driver.findElement(By.cssSelector(".product-name [href*=eyeglasses]")).click();
+            driver.findElement(By.cssSelector(".add-to-cart-buttons .btn-cart")).click();
+            Select dropdownCountry = new Select(driver.findElement(By.id("country")));
             dropdownCountry.selectByValue("FR");
 
-            Select state = new Select(driver.findElement(By.xpath("//*[@id=\"region_id\"]")));
+            Select state = new Select(driver.findElement(By.id("region_id")));
             state.selectByValue("251");
 
-            driver.findElement(By.cssSelector("#city")).sendKeys("Lyon");
-            driver.findElement(By.cssSelector("#postcode")).sendKeys("69000");
-            driver.findElement(By.cssSelector("#shipping-zip-form > div > button > span > span")).click();
+            driver.findElement(By.id("city")).sendKeys("Lyon");
+            driver.findElement(By.id("postcode")).sendKeys("69000");
+            driver.findElement(By.cssSelector("[title='Estimate']")).click();
+            driver.findElement(By.cssSelector("[for='s_method_flatrate_flatrate']")).click();
 
             WebElement totalElement =
-                    driver.findElement(By.cssSelector("#shopping-cart-totals-table > tfoot > tr > td:nth-child(1) " +
-                                                      "> strong"));
-            Assert.assertEquals("GRAND TOTAL" , totalElement.getText());
+                    driver.findElement(By.cssSelector(".a-right strong .price"));
+            Assert.assertEquals("295,00 RON" , totalElement.getText());
 
 
         }
@@ -170,20 +138,15 @@ public class CartTest {
         public void addInvalidDiscountCodeToCart () {
 
             Actions action = new Actions (driver);
-            WebElement homeDecoElement = driver.findElement(By.cssSelector("#nav > ol > li.level0.nav-4.parent > a"));
+            WebElement homeDecoElement = driver.findElement(By.cssSelector(".nav-4 .has-children"));
             action.moveToElement(homeDecoElement).perform();
-            driver.findElement(By.xpath("//*[@id=\"nav\"]/ol/li[4]/ul/li[4]/a")).click();
-            driver.findElement(By.cssSelector("body > div > div.page > div.main-container.col3-layout > div > " +
-                                              "div.col-wrapper > div.col-main > div.category-products > ul > " +
-                                              "li:nth-child(3) > div > div.actions > button > span > span")).click();
-            driver.findElement(By.cssSelector("#coupon_code")).sendKeys("discount");
-            driver.findElement(By.cssSelector("#discount-coupon-form > div > div > div > div > button > span " +
-                                              "> span")).click();
+            driver.findElement(By.cssSelector(".nav-4-3 a")).click();
+            driver.findElement(By.cssSelector(".item:nth-child(3) .btn-cart")).click();
+            driver.findElement(By.id("coupon_code")).sendKeys("discount");
+            driver.findElement(By.cssSelector(".button-wrapper")).click();
 
             WebElement invalidCode =
-                    driver.findElement(By.cssSelector("body > div > div.page > div.main-container.col1-layout > " +
-                                                      "div > div > div.cart.display-single-price > ul > li > ul > " +
-                                                      "li > span"));
+                    driver.findElement(By.cssSelector(".error-msg"));
             Assert.assertEquals("Coupon code \"discount\" is not valid." , invalidCode.getText());
 
 
@@ -193,16 +156,12 @@ public class CartTest {
         public void proceedToCheckoutWithoutLogin () {
 
             Actions action = new Actions(driver);
-            WebElement accessoriesElement = driver.findElement(By.cssSelector("#nav > ol > li.level0.nav-3.parent > a"));
+            WebElement accessoriesElement = driver.findElement(By.cssSelector(".nav-3 .has-children"));
             action.moveToElement(accessoriesElement).perform();
-            driver.findElement(By.xpath("//*[@id=\"nav\"]/ol/li[3]/ul/li[3]/a")).click();
-            driver.findElement(By.cssSelector("body > div > div.page > div.main-container.col3-layout > div > " +
-                                              "div.col-wrapper > div.col-main > div.category-products > ul > " +
-                                              "li:nth-child(1) > div > div.actions > button > span > span")).click();
-            driver.findElement(By.cssSelector("body > div > div.page > div.main-container.col1-layout > div > div > " +
-                                              "div.cart.display-single-price > div.page-title.title-buttons > ul > li " +
-                                              "> button > span > span")).click();
-            WebElement checkout = driver.findElement(By.cssSelector("#checkout-step-login > div > div.col-1 > h3"));
+            driver.findElement(By.cssSelector(".nav-3-2 a")).click();
+            driver.findElement(By.cssSelector(".item:nth-child(1) .btn-cart")).click();
+            driver.findElement(By.cssSelector(".top .btn-checkout")).click();
+            WebElement checkout = driver.findElement(By.cssSelector(".col-1 h3"));
             Assert.assertEquals("CHECKOUT AS A GUEST OR REGISTER" , checkout.getText());
         }
 

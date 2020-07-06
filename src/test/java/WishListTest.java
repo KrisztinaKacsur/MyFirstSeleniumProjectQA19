@@ -9,6 +9,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 
+import static javax.swing.text.html.CSS.getAttribute;
+
 public class WishListTest {
     private WebDriver driver;
 
@@ -28,16 +30,11 @@ public class WishListTest {
     public void addToWishListSale () {
 
 
-        driver.findElement(By.cssSelector("#nav > ol > li.level0.nav-5.parent > a")).click();
-        driver.findElement(By.cssSelector("body > div > div.page > div.main-container.col3-layout > div > " +
-                "div.col-wrapper > div.col-main > div.category-products > ul > " +
-                "li:nth-child(1) > div > div.actions > a")).click();
-        driver.findElement(By.cssSelector("#product_addtocart_form > " +
-                "div.product-shop > div.product-options-bottom > ul.add-to-links " +
-                "> li:nth-child(1) > a")).click();
+        driver.findElement(By.cssSelector(".nav-5 a.has-children")).click();
+        driver.findElement(By.cssSelector("a[href*='racer'][title='View Details']")).click();
+        driver.findElement(By.cssSelector(".link-wishlist")).click();
         WebElement addToWishListWithoutLogin =
-                driver.findElement(By.cssSelector("#login-form > div > div.col-2.registered-users > " +
-                                                  "div.content.fieldset > p.form-instructions"));
+                driver.findElement(By.cssSelector(".fieldset .form-instructions"));
         Assert.assertEquals("If you have an account with us, please log in." , addToWishListWithoutLogin.getText());
 
     }
@@ -47,25 +44,20 @@ public class WishListTest {
     @Test
     public void addToWishListLogin () {
 
-        driver.findElement(By.cssSelector("#header > div > div.skip-links > div > a > span.label")).click();
-        driver.findElement(By.cssSelector("#header-account > div > ul > li.last > a")).click();
-        driver.findElement(By.cssSelector("#email")).sendKeys("kricsk3@gmail.com");
-        driver.findElement(By.cssSelector("#pass")).sendKeys("Madison");
-        driver.findElement(By.cssSelector("#send2 > span > span")).click();
+        driver.findElement(By.cssSelector(".skip-account span.label")).click();
+        driver.findElement(By.cssSelector("a[title='Log In']")).click();
+        driver.findElement(By.id("email")).sendKeys("kricsk3@gmail.com");
+        driver.findElement(By.id("pass")).sendKeys("Madison");
+        driver.findElement(By.id("send2")).click();
 
         Actions action = new Actions(driver);
-        WebElement elementWomen = driver.findElement(By.xpath("/html/body/div/div[2]/header/div/div[3]/nav/ol/li[1]/a"));
+        WebElement elementWomen = driver.findElement(By.cssSelector("a[href*='women'].has-children"));
         action.moveToElement(elementWomen).perform();
-        driver.findElement(By.cssSelector("#nav > ol > li.level0.nav-1.first.parent > ul > li.level1.nav-1-4.last " +
-                "> a")).click();
-        driver.findElement(By.cssSelector("body > div > div.page > div.main-container.col3-layout " +
-                "> div > div.col-wrapper > div.col-main > div.category-products > ul > " +
-                "li:nth-child(1) > div > div.actions > ul > li:nth-child(1) > a")).click();
+        driver.findElement(By.cssSelector("[href*='dresses']")).click();
+        driver.findElement(By.cssSelector("a[href*='422'].link-wishlist")).click();
 
         WebElement addedToWishListElement =
-                driver.findElement(By.cssSelector("body > div > div.page > div.main-container.col2-left-layout > " +
-                                                  "div > div.col-main > div.my-account > div.my-wishlist > ul > " +
-                                                  "li > ul > li"));
+                driver.findElement(By.cssSelector(".success-msg li"));
         Assert.assertEquals("Essex Pencil Skirt has been added to your wishlist. Click here to continue shopping." ,
                              addedToWishListElement.getText());
 
@@ -76,24 +68,22 @@ public class WishListTest {
     @Test
     public void removeFromWishList () {
 
-        driver.findElement(By.cssSelector("#header > div > div.skip-links > div > a > span.label")).click();
-        driver.findElement(By.cssSelector("#header-account > div > ul > li.last > a")).click();
-        driver.findElement(By.cssSelector("#email")).sendKeys("kricsk3@gmail.com");
-        driver.findElement(By.cssSelector("#pass")).sendKeys("Madison");
-        driver.findElement(By.cssSelector("#send2 > span > span")).click();
+        driver.findElement(By.cssSelector(".skip-account span.label")).click();
+        driver.findElement(By.cssSelector("a[title='Log In']")).click();
+        driver.findElement(By.id("email")).sendKeys("kricsk3@gmail.com");
+        driver.findElement(By.id("pass")).sendKeys("Madison");
+        driver.findElement(By.id("send2")).click();
 
         Actions action = new Actions(driver);
-        WebElement elementAccessories = driver.findElement(By.xpath("//*[@id=\"nav\"]/ol/li[3]/a"));
+        WebElement elementAccessories = driver.findElement(By.cssSelector("a[href*='accessories'].has-children"));
         action.moveToElement(elementAccessories).perform();
-        driver.findElement(By.cssSelector("#nav > ol > li.level0.nav-3.parent > ul > li.level1.nav-3-3 > a")).click();
-        driver.findElement(By.cssSelector("body > div > div.page > div.main-container.col3-layout > div > " +
-                                          "div.col-wrapper > div.col-main > div.category-products > ul > " +
-                                          "li:nth-child(1) > div > div.actions > ul > li:nth-child(1) > a")).click();
-        driver.findElement(By.cssSelector("#item_707 > td.wishlist-cell5.customer-wishlist-item-remove.last > a")).click();
+        driver.findElement(By.cssSelector("[href*='shoes']")).click();
+        driver.findElement(By.cssSelector("[href*='430'].link-wishlist")).click();
+        driver.findElement(By.cssSelector(".btn-remove2")).click();
         Alert alert = driver.switchTo().alert();
         alert.accept();
 
-        WebElement emptyWishListElement = driver.findElement(By.cssSelector("#wishlist-view-form > div > p"));
+        WebElement emptyWishListElement = driver.findElement(By.cssSelector(".wishlist-empty"));
         Assert.assertEquals("You have no items in your wishlist." , emptyWishListElement.getText());
 
     }
@@ -102,50 +92,42 @@ public class WishListTest {
     @Test
     public void updateQuantityInWishList () {
 
-        driver.findElement(By.cssSelector("#header > div > div.skip-links > div > a > span.label")).click();
-        driver.findElement(By.cssSelector("#header-account > div > ul > li.last > a")).click();
-        driver.findElement(By.cssSelector("#email")).sendKeys("kricsk3@gmail.com");
-        driver.findElement(By.cssSelector("#pass")).sendKeys("Madison");
-        driver.findElement(By.cssSelector("#send2 > span > span")).click();
+        driver.findElement(By.cssSelector(".skip-account span.label")).click();
+        driver.findElement(By.cssSelector("a[title='Log In']")).click();
+        driver.findElement(By.id("email")).sendKeys("kricsk3@gmail.com");
+        driver.findElement(By.id("pass")).sendKeys("Madison");
+        driver.findElement(By.id("send2")).click();
 
         Actions action = new Actions(driver);
-        WebElement elementMen = driver.findElement(By.xpath("//*[@id=\"nav\"]/ol/li[2]/a"));
+        WebElement elementMen = driver.findElement(By.cssSelector(".nav-2 .has-children"));
         action.moveToElement(elementMen).perform();
-        driver.findElement(By.cssSelector("#nav > ol > li.level0.nav-2.parent > ul > li.level1.nav-2-4 > a")).click();
-        driver.findElement(By.cssSelector("body > div > div.page > div.main-container.col3-layout > div " +
-                                          "> div.col-wrapper > div.col-main > div.category-products > ul > " +
-                                          "li:nth-child(1) > div > div.actions > ul > li:nth-child(1) > a")).click();
-        driver.findElement(By.xpath("//*[@id=\"item_705\"]/td[3]/div/div/input")).clear();
-        driver.findElement((By.xpath("//*[@id=\"item_705\"]/td[3]/div/div/input"))).sendKeys("4");
-        driver.findElement(By.cssSelector("#wishlist-view-form > div > div > button.button.btn-update.button-secondary" +
-                                          " > span > span")).click();
+        driver.findElement(By.cssSelector(".nav-2-4 [href*='pants']")).click();
+        driver.findElement(By.cssSelector("[href*='414'].link-wishlist")).click();
+        driver.findElement(By.cssSelector(".input-text.qty")).clear();
+        driver.findElement((By.cssSelector(".input-text.qty"))).sendKeys("4");
+        driver.findElement(By.cssSelector(".buttons-set2 .btn-update")).click();
         String updateQuantity =
-                driver.findElement(By.xpath("//*[@id=\"item_705\"]/td[3]/div/div/input")).getAttribute("value");
-
+                driver.findElement(By.cssSelector(".input-text.qty")).getAttribute("value");
         Assert.assertEquals("4" , updateQuantity);
-
     }
 
     @Test
     public void addFromWishListToCart () {
 
-        driver.findElement(By.cssSelector("#header > div > div.skip-links > div > a > span.label")).click();
-        driver.findElement(By.cssSelector("#header-account > div > ul > li.last > a")).click();
-        driver.findElement(By.cssSelector("#email")).sendKeys("kricsk3@gmail.com");
-        driver.findElement(By.cssSelector("#pass")).sendKeys("Madison");
-        driver.findElement(By.cssSelector("#send2 > span > span")).click();
+        driver.findElement(By.cssSelector(".skip-account span.label")).click();
+        driver.findElement(By.cssSelector("a[title='Log In']")).click();
+        driver.findElement(By.id("email")).sendKeys("kricsk3@gmail.com");
+        driver.findElement(By.id("pass")).sendKeys("Madison");
+        driver.findElement(By.id("send2")).click();
 
         Actions action = new Actions(driver);
-        WebElement elementHomeDeco = driver.findElement(By.xpath("//*[@id=\"nav\"]/ol/li[4]/a"));
+        WebElement elementHomeDeco = driver.findElement(By.cssSelector(".nav-4 .has-children"));
         action.moveToElement(elementHomeDeco).perform();
-        driver.findElement(By.cssSelector("#nav > ol > li.level0.nav-4.parent > ul > li.level1.nav-4-2 > a")).click();
-        driver.findElement(By.cssSelector("body > div > div.page > div.main-container.col3-layout > div" +
-                " > div.col-wrapper > div.col-main > div.category-products > ul > li:nth-child(1) > div >" +
-                " div.actions > ul > li:nth-child(1) > a")).click();
-        driver.findElement(By.cssSelector("#wishlist-view-form > div > div > button.button.btn-add > span > span")).click();
+        driver.findElement(By.cssSelector(".nav-4-2 [href]")).click();
+        driver.findElement(By.cssSelector("[href*='378'].link-wishlist")).click();
+        driver.findElement(By.cssSelector(".btn-add")).click();
         WebElement addedToCartElement =
-                driver.findElement(By.cssSelector("body > div > div.page > div.main-container.col1-layout > div > " +
-                                                  "div > div.cart.display-single-price > ul > li > ul > li"));
+                driver.findElement(By.cssSelector(".success-msg"));
         Assert.assertEquals("1 product(s) have been added to shopping cart: \"Body Wash with Lemon Flower Extract " +
                             "and Aloe Vera\"." , addedToCartElement.getText());
 
@@ -155,7 +137,6 @@ public class WishListTest {
     public void exit () {
         driver.quit();
     }
-
 
 
 

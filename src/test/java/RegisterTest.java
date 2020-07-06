@@ -32,40 +32,38 @@ public class RegisterTest {
     @Test
     public void registerNewUser () {
 
-        driver.findElement(By.cssSelector("#header > div > div.skip-links > div > a > span.label")).click();
-        driver.findElement(By.cssSelector("#header-account > div > ul > li:nth-child(5) > a")).click();
-        driver.findElement(By.cssSelector("#firstname")).sendKeys("Jenny");
-        driver.findElement(By.cssSelector("#middlename")).sendKeys("A");
-        driver.findElement(By.cssSelector("#lastname")).sendKeys("Johnson");
+        driver.findElement(By.cssSelector(".skip-account")).click();
+        driver.findElement(By.cssSelector("[title='Register']")).click();
+        driver.findElement(By.id("firstname")).sendKeys("Jenny");
+        driver.findElement(By.id("middlename")).sendKeys("A");
+        driver.findElement(By.id("lastname")).sendKeys("Johnson");
         WebElement email = driver.findElement(By.id("email_address"));
 
         Random randomGenerator = new Random();
         int randomInt = randomGenerator.nextInt(1000);
         email.sendKeys("krisztina" + randomInt + "@gmail.com");
 
-        driver.findElement(By.cssSelector("#password")).sendKeys("#TestMail");
-        driver.findElement(By.cssSelector("#confirmation")).sendKeys("#TestMail");
-        driver.findElement(By.cssSelector("#is_subscribed")).click();
+        driver.findElement(By.id("password")).sendKeys("#TestMail");
+        driver.findElement(By.id("confirmation")).sendKeys("#TestMail");
+        driver.findElement(By.id("is_subscribed")).click();
 
     }
 
     @Test
     public void registerWithExistingUserEmail () {
 
-        driver.findElement(By.cssSelector("#header > div > div.skip-links > div > a > span.label")).click();
-        driver.findElement(By.cssSelector("#header-account > div > ul > li:nth-child(5) > a")).click();
-        driver.findElement(By.cssSelector("#firstname")).sendKeys("Jenny");
-        driver.findElement(By.cssSelector("#middlename")).sendKeys("A");
-        driver.findElement(By.cssSelector("#lastname")).sendKeys("Johnson");
-        driver.findElement(By.cssSelector("#email_address")).sendKeys("kricsk3@gmail.com");
-        driver.findElement(By.cssSelector("#password")).sendKeys("#TestMail");
-        driver.findElement(By.cssSelector("#confirmation")).sendKeys("#TestMail");
-        driver.findElement(By.cssSelector("#is_subscribed")).click();
-        driver.findElement(By.cssSelector("#form-validate > div.buttons-set > button")).click();
+        driver.findElement(By.cssSelector(".skip-account")).click();
+        driver.findElement(By.cssSelector("[title='Register']")).click();
+        driver.findElement(By.id("firstname")).sendKeys("Jenny");
+        driver.findElement(By.id("middlename")).sendKeys("A");
+        driver.findElement(By.id("lastname")).sendKeys("Johnson");
+        driver.findElement(By.id("email_address")).sendKeys("kricsk3@gmail.com");
+        driver.findElement(By.id("password")).sendKeys("#TestMail");
+        driver.findElement(By.id("confirmation")).sendKeys("#TestMail");
+        driver.findElement(By.id("is_subscribed")).click();
+        driver.findElement(By.cssSelector(".buttons-set .button")).click();
 
-        WebElement registeredEmailElement = driver.findElement(By.cssSelector("body > div > div.page > div.main-" +
-                                                                              "container.col1-layout > div > div > " +
-                                                                              "div.account-create > ul > li > ul > li"));
+        WebElement registeredEmailElement = driver.findElement(By.cssSelector(".error-msg"));
         Assert.assertEquals("There is already an account with this email address. If you are sure that it is your " +
                             "email address, click here to get your password and access your account." ,
                             registeredEmailElement.getText());
@@ -73,16 +71,16 @@ public class RegisterTest {
 
     @Test
     public void registerWithoutEmail () {
-        driver.findElement(By.cssSelector("#header > div > div.skip-links > div > a > span.label")).click();
-        driver.findElement(By.cssSelector("#header-account > div > ul > li:nth-child(5) > a")).click();
-        driver.findElement(By.cssSelector("#firstname")).sendKeys("Jenny");
-        driver.findElement(By.cssSelector("#middlename")).sendKeys("A");
-        driver.findElement(By.cssSelector("#lastname")).sendKeys("Johnson");
-        driver.findElement(By.cssSelector("#password")).sendKeys("#TestMail");
-        driver.findElement(By.cssSelector("#confirmation")).sendKeys("#TestMail");
-        driver.findElement(By.cssSelector("#is_subscribed")).click();
-        driver.findElement(By.cssSelector("#form-validate > div.buttons-set > button")).click();
-        WebElement noEmail = driver.findElement(By.cssSelector("#advice-required-entry-email_address"));
+        driver.findElement(By.cssSelector(".skip-account")).click();
+        driver.findElement(By.cssSelector("[title='Register']")).click();
+        driver.findElement(By.id("firstname")).sendKeys("Jenny");
+        driver.findElement(By.id("middlename")).sendKeys("A");
+        driver.findElement(By.id("lastname")).sendKeys("Johnson");
+        driver.findElement(By.id("password")).sendKeys("#TestMail");
+        driver.findElement(By.id("confirmation")).sendKeys("#TestMail");
+        driver.findElement(By.id("is_subscribed")).click();
+        driver.findElement(By.cssSelector(".buttons-set .button")).click();
+        WebElement noEmail = driver.findElement(By.id("advice-required-entry-email_address"));
         Assert.assertEquals("This is a required field." , noEmail.getText());
 
 
@@ -92,33 +90,33 @@ public class RegisterTest {
 
     @Test
     public void registerWithoutPassword () {
-        driver.findElement(By.cssSelector("#header > div > div.skip-links > div > a > span.label")).click();
-        driver.findElement(By.cssSelector("#header-account > div > ul > li:nth-child(5) > a")).click();
-        driver.findElement(By.cssSelector("#firstname")).sendKeys("Jenny");
-        driver.findElement(By.cssSelector("#middlename")).sendKeys("A");
-        driver.findElement(By.cssSelector("#lastname")).sendKeys("Johnson");
-        driver.findElement(By.cssSelector("#email_address")).sendKeys("kricsk3@gmail.com");
-        driver.findElement(By.cssSelector("#password")).sendKeys("#TestMail");
-        driver.findElement(By.cssSelector("#is_subscribed")).click();
-        driver.findElement(By.cssSelector("#form-validate > div.buttons-set > button")).click();
-        WebElement noConfirmationPassword = driver.findElement(By.cssSelector("#advice-required-entry-confirmation"));
+        driver.findElement(By.cssSelector(".skip-account")).click();
+        driver.findElement(By.cssSelector("[title='Register']")).click();
+        driver.findElement(By.id("firstname")).sendKeys("Jenny");
+        driver.findElement(By.id("middlename")).sendKeys("A");
+        driver.findElement(By.id("lastname")).sendKeys("Johnson");
+        driver.findElement(By.id("email_address")).sendKeys("kricsk3@gmail.com");
+        driver.findElement(By.id("password")).sendKeys("#TestMail");
+        driver.findElement(By.id("is_subscribed")).click();
+        driver.findElement(By.cssSelector(".buttons-set .button")).click();
+        WebElement noConfirmationPassword = driver.findElement(By.id("advice-required-entry-confirmation"));
         Assert.assertEquals("This is a required field." , noConfirmationPassword.getText());
 
     }
 
     @Test
     public void passwordNoMatch () {
-        driver.findElement(By.cssSelector("#header > div > div.skip-links > div > a > span.label")).click();
-        driver.findElement(By.cssSelector("#header-account > div > ul > li:nth-child(5) > a")).click();
-        driver.findElement(By.cssSelector("#firstname")).sendKeys("Jenny");
-        driver.findElement(By.cssSelector("#middlename")).sendKeys("A");
-        driver.findElement(By.cssSelector("#lastname")).sendKeys("Johnson");
-        driver.findElement(By.cssSelector("#email_address")).sendKeys("kricsk3@gmail.com");
-        driver.findElement(By.cssSelector("#password")).sendKeys("#TestMail");
-        driver.findElement(By.cssSelector("#confirmation")).sendKeys("#Testabcde");
-        driver.findElement(By.cssSelector("#is_subscribed")).click();
-        driver.findElement(By.cssSelector("#form-validate > div.buttons-set > button")).click();
-        WebElement pwMatch = driver.findElement(By.cssSelector("#advice-validate-cpassword-confirmation"));
+        driver.findElement(By.cssSelector(".skip-account")).click();
+        driver.findElement(By.cssSelector("[title='Register']")).click();
+        driver.findElement(By.id("firstname")).sendKeys("Jenny");
+        driver.findElement(By.id("middlename")).sendKeys("A");
+        driver.findElement(By.id("lastname")).sendKeys("Johnson");
+        driver.findElement(By.id("email_address")).sendKeys("kricsk3@gmail.com");
+        driver.findElement(By.id("password")).sendKeys("#TestMail");
+        driver.findElement(By.id("confirmation")).sendKeys("#Testabcde");
+        driver.findElement(By.id("is_subscribed")).click();
+        driver.findElement(By.cssSelector(".buttons-set .button")).click();
+        WebElement pwMatch = driver.findElement(By.id("advice-validate-cpassword-confirmation"));
         Assert.assertEquals("Please make sure your passwords match.", pwMatch.getText());
 
 

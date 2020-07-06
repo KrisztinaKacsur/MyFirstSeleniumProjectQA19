@@ -25,15 +25,12 @@ public class LoginTest {
     @Test
     public void login(){
 
-        driver.findElement(By.cssSelector("#header > div > div.skip-links > div > a > span.label")).click();
-        driver.findElement(By.cssSelector("#header-account > div > ul > li.last > a")).click();
-        driver.findElement(By.cssSelector("#email")).sendKeys("kricsk3@gmail.com");
-        driver.findElement(By.cssSelector("#pass")).sendKeys("Madison");
-        driver.findElement(By.cssSelector("#send2 > span > span")).click();
-        WebElement welcomeElement  = driver.findElement(By.cssSelector("body > div > div.page > div.main-container." +
-                                                                       "col2-left-layout > div > div.col-main > " +
-                                                                       "div.my-account > div > div.welcome-msg > " +
-                                                                       "p.hello > strong"));
+        driver.findElement(By.cssSelector(".skip-account span.label")).click();
+        driver.findElement(By.cssSelector("a[title='Log In']")).click();
+        driver.findElement(By.id("email")).sendKeys("kricsk3@gmail.com");
+        driver.findElement(By.id("pass")).sendKeys("Madison");
+        driver.findElement(By.id("send2")).click();
+        WebElement welcomeElement  = driver.findElement(By.cssSelector(".hello"));
         Assert.assertTrue(welcomeElement.isDisplayed());
         Assert.assertEquals("Hello, Jenny K Jhonson!" , welcomeElement.getText());
 
@@ -43,13 +40,12 @@ public class LoginTest {
     @Test
     public void invalidEmailLogin(){
 
-        driver.findElement(By.cssSelector("#header > div > div.skip-links > div > a > span.label")).click();
-        driver.findElement(By.cssSelector("#header-account > div > ul > li.last > a")).click();
-        driver.findElement(By.cssSelector("#email")).sendKeys("kricsk3gmail.com");
-        driver.findElement(By.cssSelector("#pass")).sendKeys("Madison");
-        driver.findElement(By.cssSelector("#send2 > span > span")).click();
-        WebElement invalidEmailPw = driver.findElement(By.cssSelector("body > div > div.page > div.main-container." +
-                                                                      "col1-layout > div > div > div.account-login"));
+        driver.findElement(By.cssSelector(".skip-account span.label")).click();
+        driver.findElement(By.cssSelector("a[title='Log In']")).click();
+        driver.findElement(By.id("email")).sendKeys("kricsk@gmail.com");
+        driver.findElement(By.id("pass")).sendKeys("Madison");
+        driver.findElement(By.id("send2")).click();
+        WebElement invalidEmailPw = driver.findElement(By.cssSelector(".error-msg"));
         Assert.assertTrue(invalidEmailPw.isDisplayed());
 
     }
@@ -57,13 +53,12 @@ public class LoginTest {
     @Test
     public void invalidPasswordLogin(){
 
-        driver.findElement(By.cssSelector("#header > div > div.skip-links > div > a > span.label")).click();
-        driver.findElement(By.cssSelector("#header-account > div > ul > li.last > a")).click();
-        driver.findElement(By.cssSelector("#email")).sendKeys("kricsk3@gmail.com");
-        driver.findElement(By.cssSelector("#pass")).sendKeys("mad");
-        driver.findElement(By.cssSelector("#send2 > span > span")).click();
-        WebElement invalidEmailPw = driver.findElement(By.cssSelector("body > div > div.page > div.main-container." +
-                                                                      "col1-layout > div > div > div.account-login"));
+        driver.findElement(By.cssSelector(".skip-account span.label")).click();
+        driver.findElement(By.cssSelector("a[title='Log In']")).click();
+        driver.findElement(By.id("email")).sendKeys("kricsk@gmail.com");
+        driver.findElement(By.id("pass")).sendKeys("Madisong123");
+        driver.findElement(By.id("send2")).click();
+        WebElement invalidEmailPw = driver.findElement(By.cssSelector(".error-msg"));
         Assert.assertTrue(invalidEmailPw.isDisplayed());
 
     }
