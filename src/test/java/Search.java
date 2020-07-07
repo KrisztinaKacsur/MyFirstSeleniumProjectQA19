@@ -30,6 +30,15 @@ public class Search {
         Assert.assertEquals("RETRO CHIC EYEGLASSES" , foundElement.getText());
     }
 
+    @Test
+    public void noSearchResults () {
+        driver.findElement(By.id("search")).sendKeys("%$^^&**%$#E##@");
+        driver.findElement(By.cssSelector("button[title='Search']")).click();
+
+        WebElement noResultsElement = driver.findElement(By.cssSelector(".note-msg"));
+        Assert.assertEquals("Your search returns no results." , noResultsElement.getText());
+    }
+
 
     @After
     public void exit () {
